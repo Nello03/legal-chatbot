@@ -15,7 +15,6 @@ Watson Discovery permette di estrarre campi personalizzati (titolo,sottotitolo,t
 Annotare i campi all'interno dei tuoi documenti permette di addestrare modelli di conversione personalizzati. Mentre si annotano i campi, Watson impara dalle tue azioni e inizia a prevedere le annotazioni. I modelli possono anche essere esportati e utilizzati su altre collezioni.
 
 Attualmente la piattaforma Watson per l'importazione di documenti prevede due piani:
-Current document type support is based on your plan:
 
   * Lite: PDF, Word, PowerPoint, Excel, JSON, HTML
   * Avanzato: PDF, Word, PowerPoint, Excel, PNG, TIFF, JPG, JSON, HTML
@@ -23,7 +22,7 @@ Current document type support is based on your plan:
 Ecco un video che fornisce una panoramica e una procedura dettagliata su come applicarlo al documento:
 [![video](https://img.youtube.com/vi/Jpr3wVH3FVA/0.jpg)](https://www.youtube.com/watch?v=Jpr3wVH3FVA)
 
-## What is a webhook?
+## Cos'è un webhook?
 
 Un webhook è un meccanismo che ti consente di chiamare un programma esterno in base a qualcosa che sta accadendo nel tuo programma. Se utilizzato in un dialogo Watson Assistant, un webhook viene attivato quando l'assistente elabora un nodo con un webhook abilitato. Il webhook raccoglie i dati durante la conversazione e li salva in variabili di contesto e invia i dati all'URL della richiesta del webhook come richiesta HTTP POST. L'URL che riceve il webhook è il listener. Esegue un'azione predefinita utilizzando le informazioni fornite dal webhook come specificato nella definizione del webhook e, facoltativamente, può restituire una risposta.
 
@@ -31,7 +30,7 @@ In questo prototipo, il webhook comunicherà con un `web action` di IBM Cloud Fu
 
 > **Note**: Un altro metodo per integrare Watson Assistant con Watson Discovery è attraverso l'uso di una nuova funzionalità di Watson Assistant chiamata [search skill](https://cloud.ibm.com/docs/services/assistant?topic=assistant-skill-search-add).
 
-## Flow
+## Architettura
 
 ![architettura](doc/source/images/architecture-1.png)
 
@@ -43,13 +42,13 @@ In questo prototipo, il webhook comunicherà con un `web action` di IBM Cloud Fu
 
 # Steps:
 
-1. [Clone the repo](#1-clone-the-repo)
-1. [Create IBM Cloud services](#2-create-ibm-cloud-services)
-1. [Configure Watson Discovery](#3-configure-watson-discovery)
-1. [Create IBM Cloud Functions action](#4-create-ibm-cloud-functions-action)
-1. [Configure Watson Assistant](#5-configure-watson-assistant)
-1. [Get IBM Cloud services credentials and add to .env file](#6-get-ibm-cloud-services-credentials-and-add-to-env-file)
-1. [Run the application](#7-run-the-application)
+1. [Clona il repo](#1-clone-the-repo)
+1. [Crea i servizi su IBM Cloud](#2-create-ibm-cloud-services)
+1. [Configura Watson Discovery](#3-configure-watson-discovery)
+1. [Crea l'action IBM Cloud Functions](#4-create-ibm-cloud-functions-action)
+1. [Configura Watson Assistant](#5-configure-watson-assistant)
+1. [Ottieni le credenziali IBM Cloud services e copiale nel file .env](#6-get-ibm-cloud-services-credentials-and-add-to-env-file)
+1. [Avvia l'applicazione](#7-run-the-application)
 
 ### 1. Clona il repo
 
@@ -78,7 +77,7 @@ Clicca `Build your own query` [1] bottone.
 
 Immettere le query relative alla ricerca di articoli e visualizzare i risultati. Come vedrai, i risultati non sono molto utili e, in alcuni casi, nemmeno correlati alla domanda.
 
-#### AAnnotazioni
+#### Annotazioni
 
 Dal pannello Discovery, fare clic sul pulsante "Configura dati" (situato nell'angolo in alto a destra) per avviare il processo.
 
@@ -97,7 +96,6 @@ L'obiettivo è annotare tutte le pagine del documento in modo che Discovery poss
 
 Mentre scorri le annotazioni una pagina alla volta, Discovery sta imparando e dovrebbe iniziare ad aggiornare automaticamente le pagine successive. Una volta raggiunta una pagina che è già annotata correttamente, è possibile interrompere o semplicemente fare clic su "Invia" [5] per confermare che è corretta. Più pagine annoti, migliore sarà il training del modello.
 
-For this specific owner's manual, at a minimum, it is suggested to mark the following:
 Per questo specifico documento, come minimo, si suggerisce di contrassegnare quanto segue:
 
 * Il frontespizio principale come `title`.
@@ -179,7 +177,6 @@ Per i valori, utilizza i valori associati al servizio Discovery che hai creato n
 
 > Nota: assicurati di racchiudere i tuoi valori tra virgolette.
 
-Now that the credentials are set, return to the `Code` panel and press the `Invoke` button again. Now you should see actual results returned from the Discovery service:
 Ora che le credenziali sono impostate, torna al pannello `Code` e premi nuovamente il pulsante `Invoke`. Ora dovresti vedere i risultati effettivi restituiti dal servizio Discovery:
 
 ![action-code-invoke](doc/source/images/action-code-invoke.png)
@@ -346,12 +343,6 @@ npm start
 ```
 
 Accedi all'interfaccia utente facendo puntare il tuo browser su `localhost:3000`.
-
-Sample questions:
-
-* **how do I set a schedule?**
-* **how do I set the temperature?**
-* **how do I set the time?**
 
 # Semplice Output
 
