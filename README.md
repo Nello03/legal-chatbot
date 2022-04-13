@@ -69,6 +69,8 @@ Come mostrato di seguito, avvia lo strumento `Watson Discovery` e crea una nuova
 
 ![upload_data_into_collection](doc/source/images/upload-disco-file.gif)
 
+Prima di applicare gli algoritmi di Discovery al nostro documento, eseguiamo alcune semplici query sui dati in modo da poterlo confrontare con i risultati rilevati dopo l'applicazione degli algoritmi.
+
 ![disco-collection-panel-pre](doc/source/images/disco-collection-panel-pre.png)
 
 Clicca `Build your own query` [1] bottone.
