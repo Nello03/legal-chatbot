@@ -41,8 +41,8 @@ class DefaultLayout extends React.Component {
           
           <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-          <meta name="og:title" content="Watson Discovery Search UI" />
-          <meta name="og:description" content={this.props.description || 'Search using Watson Discovery Service'} />
+          <meta name="og:title" content="Legal Chatboti UI" />
+          <meta name="og:description" content={this.props.description || 'Cerca usando Legal Chatboti UIx'} />
           <link rel="stylesheet" type="text/css" href="/css/application.css" />
           <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.12/semantic.min.css" />
           <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
@@ -53,17 +53,11 @@ class DefaultLayout extends React.Component {
         <body>
           <div className="w3-top">
             <div className="w3-bar w3-white w3-wide w3-padding w3-card">
-              <a href="#home" className="w3-bar-item w3-button"><b>LEGAL</b> Chatbot</a>
-              <div className="w3-right w3-hide-small">
-                <a href="#projects" className="w3-bar-item w3-button">Projects</a>
-                <a href="#about" className="w3-bar-item w3-button">About</a>
-                <a href="#contact" className="w3-bar-item w3-button">Contact</a>
-              </div>
+              <a href="http://localhost:3000/index" className="w3-bar-item w3-button"><b>LEGAL</b> Chatbot</a>
             </div>
           </div>
 
           <div className="w3-content w3-padding" style={{'max-width':'1564px', 'marginTop': '100px'}}>
-            {console.log('PLUTO;:',this.props)}
             <main>{this.props.children}</main>
           </div>
           <script

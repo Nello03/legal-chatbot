@@ -688,7 +688,7 @@ div.item.right-item-list {
 }
 
 div.ui.card.chatbot-container {
-  width: 800px;
+  width: auto;
 }
 
 div.content.message-text {
@@ -697,5 +697,5 @@ div.content.message-text {
 
 div.content.dialog-header {
   text-align: center;
-  background: #d4d4d5 !important;  
+  background: #ffffff !important;  
 }

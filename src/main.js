@@ -16,9 +16,9 @@
 
 import 'isomorphic-fetch';
 import React from 'react';
-import PropTypes, { func } from 'prop-types';
+import PropTypes from 'prop-types';
 import Messages from './Messages';
-import { Grid, Card, Input } from 'semantic-ui-react';
+import { Grid, Card, Input, Button, Segment, Message, Header, Icon } from 'semantic-ui-react';
 
 const util = require('util');
 
@@ -41,20 +41,22 @@ class Main extends React.Component {
 
     // change in state fires re-render of components
 
-    let text = "";
-    if(this.props.ctx){
-      if(this.props.ctx == 'res_amm'){
+    let text = '';
+    // eslint-disable-next-line react/prop-types
+    if (this.props.ctx) {
+      // eslint-disable-next-line react/prop-types
+      if (this.props.ctx == 'res_amm') {
         text = 'Benvenuto in Responsabilità Amministrativa!';
-      } 
+      }
     } else {
       text = 'Benvenuto in Legal chatbot!';
     }
-    
+
 
 
     this.state = {
       error: error,
-      // assistant data
+      // assistant datas
       context: {},
       userInput: '',
       conversation: [
@@ -104,13 +106,21 @@ class Main extends React.Component {
 
       // returned text from assistant will either be a pre-canned 
       // dialog response, or Discovery Search result
-      if (result.response_type === 'text') {
+      if (result && result.response_type === 'text') {
 
-        if(IsJsonString(result.text)){
-          text = JSON.parse(result.text).results[0].text;
+        if (IsJsonString(result.text)) {
+          let json = JSON.parse(result.text);
+          if (json.results.length > 0) {
+            text = json.results[0].text;
+          } else {
+            text = 'Non ho trovato risultati. Prova a riformulare la tua domanda!';
+          }
+
         } else {
           text = result.text;
         }
+
+        console.log(text);
         // normal dialog response from Assistant
         // add to message list
         messageCounter += 1;
@@ -119,7 +129,7 @@ class Main extends React.Component {
           text: text,
           owner: 'watson'
         });
-      } else if (result.response_type === 'search') {
+      } else if (result && result.response_type === 'search') {
         console.log('GOT DISCO OUTPUT!');
         // got response from Assistant search skill
         // add a header to our message
@@ -139,7 +149,7 @@ class Main extends React.Component {
             message = result.results[i].body;
           }
         }
-        if (result.results.length > 0) {
+        if (result && result.results.length > 0) {
           messageCounter += 1;
           conversation.push({
             id: messageCounter,
@@ -147,11 +157,22 @@ class Main extends React.Component {
             owner: 'watson'
           });
         }
-      } else {
+      } else if (result && result.response_type === 'option') {
+        //console.log(result.options)
+        //text = result.title
         messageCounter += 1;
         conversation.push({
           id: messageCounter,
-          text: 'Sorry. Please repeat your question',
+          text: result.title,
+          owner: 'watson'
+        });
+
+      }
+      else {
+        messageCounter += 1;
+        conversation.push({
+          id: messageCounter,
+          text: 'Non ho capito. Ripeti la domanda!',
           owner: 'watson'
         });
       }
@@ -163,11 +184,15 @@ class Main extends React.Component {
       });
       scrollToMain();
 
-      if(text =='Reindirizzamento all\'ambito responsabilità amministrativa'){
+      if (text == 'Reindirizzamento all\'ambito responsabilità amministrativa') {
         // redirect fondi europei
         //const a = 1;
         sleep(2000).then(() => {
           window.location.replace('http://localhost:3000/respamm');
+        });
+      } else if (text == 'Arrivederci! Ti reindirizzo alla chat principale…') {
+        sleep(2000).then(() => {
+          window.location.replace('http://localhost:3000/index');
         });
       }
 
@@ -247,18 +272,57 @@ class Main extends React.Component {
   render() {
     const { userInput } = this.state;
 
-    if(this.props.ctx != undefined && this.props.ctx == 'res_amm'){
+    const items = [
+      'Di cosa tratta la responsabilità amministrativa',
+      'Portami su responsabilità amministrativa',
+      'Mostrami l\'elenco degli ambiti',
+    ];
+
+    const itemsRa = [
+      'Qual è il termine entro cui devono concludersi i procedimenti amministrativi di competenza delle amministrazioni statali e degli enti pubblici nazionali?',
+    ];
+
+    // eslint-disable-next-line react/prop-types
+    if (this.props.ctx != undefined && this.props.ctx == 'res_amm') {
       return (
-        <Grid celled className='search-grid'>
-  
-          <Grid.Row className='matches-grid-row'>
+        <Grid divided='vertically' className='search-grid'>
+          <Grid.Row columns={1}>
+            <Grid.Column>
+              <div>
+                <Header as='h2' icon textAlign='center'>
+                  <Icon name='chat' circular />
+                  <Header.Content>Benvenuto nella sezione Responsabilità Amministrativa</Header.Content>
+                </Header>
+                <Message>
+                  <Message.Header as='h3'>Utilizza la chat in basso per interagire con l&apos;assistente. Puoi chiedergli per esempio: </Message.Header>
+                  <Message.List items={itemsRa} />
+                </Message>
+              </div>
+
+            </Grid.Column>
+            <Grid.Column >
+              <Message>
+                <Message.Header as='h3'>Reindirizzamento Rapido</Message.Header>
+                <p>Puoi usare i pulsanti per effettuare un reindirizzamento rabito agli ambiti a disposizione o al Legal Chatbot!</p>
+                <Button basic color='blue' onClick={() => (window.location.href = '/index')} >
+                  Legal Chatbot
+                </Button>
+                <Button basic color='green'>
+                  Fondi Europei
+                </Button>
+              </Message>
+
+            </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row columns={1}>
             <Grid.Column width={16}>
-  
+
               <Card className='chatbot-container'>
                 <Card.Content className='dialog-header'>
-           
+
                   <Card.Header>Responsabilità Amministrativa Chatbot</Card.Header>
-              
+
                 </Card.Content>
                 <Card.Content>
                   {this.getListItems()}
@@ -272,46 +336,74 @@ class Main extends React.Component {
                   onChange={this.handleOnChange.bind(this)}
                 />
               </Card>
-  
+
             </Grid.Column>
           </Grid.Row>
-  
+
         </Grid>
       );
     } else {
       return (
-        <Grid celled className='search-grid'>
-  
-          <Grid.Row className='matches-grid-row'>
-            <Grid.Column width={16}>
-  
-              <Card className='chatbot-container'>
-                <Card.Content className='dialog-header'>
-           
-                  <Card.Header>Dispatcher Chatbot</Card.Header>
-              
-                </Card.Content>
-                <Card.Content>
-                  {this.getListItems()}
-                </Card.Content>
-                <Input
-                  icon='compose'
-                  iconPosition='left'
-                  value={userInput}
-                  placeholder='Scrivi qui......'
-                  onKeyPress={this.handleKeyPress.bind(this)}
-                  onChange={this.handleOnChange.bind(this)}
-                />
-              </Card>
-  
+        <Grid divided='vertically' className='search-grid'>
+          <Grid.Row columns={1}>
+            <Grid.Column>
+              <div>
+                <Header as='h2' icon textAlign='center'>
+                  <Icon name='chat' circular />
+                  <Header.Content>Benvenuto in Legal Chatbot</Header.Content>
+                </Header>
+                <Message>
+                  <Message.Header as='h3'>Utilizza la chat in basso per interagire con l&apos;assistente legale. Puoi chiedergli ad esempio: </Message.Header>
+                  <Message.List items={items} />
+                </Message>
+              </div>
+
+            </Grid.Column>
+            <Grid.Column >
+              <Message>
+                <Message.Header as='h3'>Reindirizzamento Rapido</Message.Header>
+                <p>Puoi usare i pulsanti per effettuare un reindirizzamento rabito agli ambiti a disposizione!</p>
+                <Button basic color='blue' onClick={() => (window.location.href = '/respamm')} >
+                  Responsavilità Amministrativa
+                </Button>
+                <Button basic color='green'>
+                  Fondi Europei
+                </Button>
+              </Message>
+
             </Grid.Column>
           </Grid.Row>
-  
+          <Grid.Row columns={1} width={16} centered className='matches-grid-row'>
+            <Grid.Column>
+              <Segment>
+
+                <Card className='chatbot-container' centered>
+                  <Card.Content className='dialog-header'>
+
+                    <Card.Header>Legal Chatbot</Card.Header>
+
+                  </Card.Content>
+                  <Card.Content>
+                    {this.getListItems()}
+                  </Card.Content>
+                  <Input
+                    icon='compose'
+                    iconPosition='left'
+                    value={userInput}
+                    placeholder='Scrivi qui......'
+                    onKeyPress={this.handleKeyPress.bind(this)}
+                    onChange={this.handleOnChange.bind(this)}
+                  />
+                </Card>
+              </Segment>
+            </Grid.Column>
+          </Grid.Row>
+
         </Grid>
       );
     }
 
-   
+
   }
 }
 
@@ -343,7 +435,7 @@ function IsJsonString(str) {
 }
 
 
-function sleep (time) {
+function sleep(time) {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
 
