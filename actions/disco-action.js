@@ -54,7 +54,3 @@
        });
      });
  }
- 
-
- //https://eu-gb.functions.appdomain.cloud/api/v1/web/aniellodandrea3%40gmail.com_dev/default/legal-action-1.json
- //https://eu-gb.functions.appdomain.cloud/api/v1/web/aniellodandrea3%40gmail.com_dev/default/fondo-europeo-action.json

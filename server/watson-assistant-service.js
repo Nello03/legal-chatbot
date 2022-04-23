@@ -51,5 +51,6 @@ const assistant = new AssistantV2({
 assistant.assistantId = process.env.ASSISTANT_ID;
 assistant.workspaceId = process.env.WORKSPACE_ID;
 assistant.assistantIdRespAmm = process.env.ASSISTANT_ID_RESP_AMM;
+assistant.assistantIdFondEur = process.env.ASSISTANT_ID_FOND_EUR;
 
 module.exports = assistant;

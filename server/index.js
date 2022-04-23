@@ -146,6 +146,24 @@ function createServer() {
     res.render('index', {ctx:'res_amm'});
   });
 
+  server.get('/fondeur', function (req, res) {
+    console.log('In startup fondeur!');
+    assistant.assistantId = process.env.ASSISTANT_ID_FOND_EUR;
+    assistant.createSession({ assistantId: assistant.assistantId })
+      .then(res => {
+        console.log('Create Session result: ' + JSON.stringify(res.result, null, 2));
+        messageBuilder.setAssistantId(assistant.assistantId);
+        messageBuilder.setSessionId(res.result.session_id);
+      })
+      .catch(error => {
+      // eslint-disable-next-line no-console
+        console.log('Error creating session:');
+        console.error(error);
+      });
+    // render chatbot welcome message
+    res.render('index', {ctx:'fon_eur'});
+  });
+
   return server;
 }
 

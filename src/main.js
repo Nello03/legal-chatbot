@@ -48,6 +48,10 @@ class Main extends React.Component {
       if (this.props.ctx == 'res_amm') {
         text = 'Benvenuto in Responsabilità Amministrativa!';
       }
+      // eslint-disable-next-line react/prop-types
+      if (this.props.ctx == 'fon_eur') {
+        text = 'Benvenuto in Fondi Europei!';
+      }
     } else {
       text = 'Benvenuto in Legal chatbot!';
     }
@@ -172,7 +176,7 @@ class Main extends React.Component {
         messageCounter += 1;
         conversation.push({
           id: messageCounter,
-          text: 'Non ho capito. Ripeti la domanda!',
+          text: 'Non ho capito. Ripeti la domanda! Puoi scegliere tra i seguenti ambiti legali: Responsabilità Ammnistrativa o Fondi Europei',
           owner: 'watson'
         });
       }
@@ -184,17 +188,37 @@ class Main extends React.Component {
       });
       scrollToMain();
 
-      if (text == 'Reindirizzamento all\'ambito responsabilità amministrativa') {
+      switch (text) {
+      case 'Reindirizzamento all\'ambito responsabilità amministrativa':
+        sleep(2000).then(() => {
+          window.location.replace('http://localhost:3000/respamm');
+        });
+        break;
+      case 'Ok! Ti reindirizzo alla schermata principale': 
+        sleep(2000).then(() => {
+          window.location.replace('http://localhost:3000/index');
+        });
+        break;
+      case 'Reindirizzamento all\'ambito fondi europei':
+        sleep(2000).then(() => {
+          window.location.replace('http://localhost:3000/fondeur');
+        });
+        break;
+      default:
+        break;
+      }
+
+      /*if (text == 'Reindirizzamento all\'ambito responsabilità amministrativa') {
         // redirect fondi europei
         //const a = 1;
         sleep(2000).then(() => {
           window.location.replace('http://localhost:3000/respamm');
         });
-      } else if (text == 'Arrivederci! Ti reindirizzo alla chat principale…') {
+      } else if (text == 'Ok! Ti reindirizzo alla schermata principale') {
         sleep(2000).then(() => {
           window.location.replace('http://localhost:3000/index');
         });
-      }
+      }*/
 
     }).catch(response => {
       console.log('ERROR in fetch: ' + JSON.stringify(response, null, 2));
@@ -303,11 +327,11 @@ class Main extends React.Component {
             <Grid.Column >
               <Message>
                 <Message.Header as='h3'>Reindirizzamento Rapido</Message.Header>
-                <p>Puoi usare i pulsanti per effettuare un reindirizzamento rabito agli ambiti a disposizione o al Legal Chatbot!</p>
+                <p>Puoi usare i pulsanti per effettuare un reindirizzamento rapido agli altri ambiti legali o al Legal Chatbot!</p>
                 <Button basic color='blue' onClick={() => (window.location.href = '/index')} >
                   Legal Chatbot
                 </Button>
-                <Button basic color='green'>
+                <Button basic color='green' onClick={() => (window.location.href = '/fondeur')}>
                   Fondi Europei
                 </Button>
               </Message>
@@ -342,7 +366,68 @@ class Main extends React.Component {
 
         </Grid>
       );
-    } else {
+    // eslint-disable-next-line react/prop-types
+    } else if (this.props.ctx != undefined && this.props.ctx == 'fon_eur') {
+      return (
+        <Grid divided='vertically' className='search-grid'>
+          <Grid.Row columns={1}>
+            <Grid.Column>
+              <div>
+                <Header as='h2' icon textAlign='center'>
+                  <Icon name='chat' circular />
+                  <Header.Content>Benvenuto nella sezione Fondi Europei</Header.Content>
+                </Header>
+                <Message>
+                  <Message.Header as='h3'>Utilizza la chat in basso per interagire con l&apos;assistente. Puoi chiedergli per esempio: </Message.Header>
+                  <Message.List items={itemsRa} />
+                </Message>
+              </div>
+
+            </Grid.Column>
+            <Grid.Column >
+              <Message>
+                <Message.Header as='h3'>Reindirizzamento Rapido</Message.Header>
+                <p>Puoi usare i pulsanti per effettuare un reindirizzamento rapido agli altri ambiti legali o al Legal Chatbot!</p>
+                <Button basic color='blue' onClick={() => (window.location.href = '/index')} >
+                  Legal Chatbot
+                </Button>
+                <Button basic color='green' onClick={() => (window.location.href = '/respamm')}>
+                  Responsabilità Amministrativa
+                </Button>
+              </Message>
+
+            </Grid.Column>
+          </Grid.Row>
+
+          <Grid.Row columns={1}>
+            <Grid.Column width={16}>
+
+              <Card className='chatbot-container'>
+                <Card.Content className='dialog-header'>
+
+                  <Card.Header>Fondi Europei Chatbot</Card.Header>
+
+                </Card.Content>
+                <Card.Content>
+                  {this.getListItems()}
+                </Card.Content>
+                <Input
+                  icon='compose'
+                  iconPosition='left'
+                  value={userInput}
+                  placeholder='Scrivi qui......'
+                  onKeyPress={this.handleKeyPress.bind(this)}
+                  onChange={this.handleOnChange.bind(this)}
+                />
+              </Card>
+
+            </Grid.Column>
+          </Grid.Row>
+
+        </Grid>
+      );
+    } 
+    else {
       return (
         <Grid divided='vertically' className='search-grid'>
           <Grid.Row columns={1}>
@@ -362,11 +447,11 @@ class Main extends React.Component {
             <Grid.Column >
               <Message>
                 <Message.Header as='h3'>Reindirizzamento Rapido</Message.Header>
-                <p>Puoi usare i pulsanti per effettuare un reindirizzamento rabito agli ambiti a disposizione!</p>
+                <p>Puoi usare i pulsanti per effettuare un reindirizzamento rapido agli ambiti legali a disposizione!</p>
                 <Button basic color='blue' onClick={() => (window.location.href = '/respamm')} >
-                  Responsavilità Amministrativa
+                  Responsabilità Amministrativa
                 </Button>
-                <Button basic color='green'>
+                <Button basic color='green'onClick={() => (window.location.href = '/fondeur')}  >
                   Fondi Europei
                 </Button>
               </Message>
