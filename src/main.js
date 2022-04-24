@@ -306,6 +306,11 @@ class Main extends React.Component {
       'Qual è il termine entro cui devono concludersi i procedimenti amministrativi di competenza delle amministrazioni statali e degli enti pubblici nazionali?',
     ];
 
+    const itemsFE = [
+      'Quali sono i compiti del FESR',
+      'Qual è l\'abito di applicazione del sostegno a titolo del FEST?'
+    ];
+
     // eslint-disable-next-line react/prop-types
     if (this.props.ctx != undefined && this.props.ctx == 'res_amm') {
       return (
@@ -379,7 +384,7 @@ class Main extends React.Component {
                 </Header>
                 <Message>
                   <Message.Header as='h3'>Utilizza la chat in basso per interagire con l&apos;assistente. Puoi chiedergli per esempio: </Message.Header>
-                  <Message.List items={itemsRa} />
+                  <Message.List items={itemsFE} />
                 </Message>
               </div>
 
