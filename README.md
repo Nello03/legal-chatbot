@@ -344,7 +344,7 @@ npm install
 npm start
 ```
 
-Accedi all'interfaccia utente facendo puntare il tuo browser su `localhost:3000`.
+Accedi all'interfaccia utente facendo puntare il tuo browser su `localhost:3000/index`.
 
 # Semplice Output
 
