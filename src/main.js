@@ -521,12 +521,11 @@ class Main extends React.Component {
 }
 
 /**
- * scrollToMain - scroll window to show 'main' rendered object.
+ * scrollToMainContainer
  */
 function scrollToMain() {
   setTimeout(() => {
-    const scrollY = document.querySelector('main').getBoundingClientRect().top + window.scrollY;
-    window.scrollTo(0, scrollY);
+    document.getElementById('mainContainer').scrollIntoView({behavior: 'smooth', block: 'end', inline: 'nearest'});
   }, 0);
 }
 
