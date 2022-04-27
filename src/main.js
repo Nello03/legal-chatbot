@@ -191,17 +191,17 @@ class Main extends React.Component {
       switch (text) {
       case 'Reindirizzamento all\'ambito responsabilità amministrativa':
         sleep(2000).then(() => {
-          window.location.replace('http://localhost:3000/respamm');
+          window.location.replace('../respamm'); 
         });
         break;
       case 'Ok! Ti reindirizzo alla schermata principale': 
         sleep(2000).then(() => {
-          window.location.replace('http://localhost:3000/index');
+          window.location.replace('../index');
         });
         break;
       case 'Reindirizzamento all\'ambito fondi europei':
         sleep(2000).then(() => {
-          window.location.replace('http://localhost:3000/fondeur');
+          window.location.replace('../fondeur');
         });
         break;
       default:

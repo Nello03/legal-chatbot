@@ -53,7 +53,7 @@ class DefaultLayout extends React.Component {
         <body>
           <div className="w3-top">
             <div className="w3-bar w3-white w3-wide w3-padding w3-card">
-              <a href="http://localhost:3000/index" className="w3-bar-item w3-button"><b>LEGAL</b> Chatbot</a>
+              <a href="../index" className="w3-bar-item w3-button"><b>LEGAL</b> Chatbot</a>
             </div>
           </div>
 
