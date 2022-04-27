@@ -104,6 +104,8 @@ class Main extends React.Component {
     }).then(json => {
       console.log('+++ ASSISTANT RESULTS +++' + JSON.stringify(json, null, 2));
       const result = json.result.output.generic[0];
+      const ent = json.result.output.entities[0];
+      const int = json.result.output.intents[0];
 
       let text = null;//JSON.parse(result.text).results[0].text;
       //console.log(pippo.results[0].text);
@@ -173,20 +175,32 @@ class Main extends React.Component {
 
       }
       else {
-        messageCounter += 1;
-        conversation.push({
-          id: messageCounter,
-          text: 'Non ho capito. Ripeti la domanda! Puoi scegliere tra i seguenti ambiti legali: Responsabilità Ammnistrativa o Fondi Europei',
-          owner: 'watson'
-        });
+
+        if(ent && ent.entity === 'ambito' && int && int.intent === 'redirect'){
+          if(ent.value === 'responsabilità amministrativa'){
+            text = 'Reindirizzamento all\'ambito responsabilità amministrativa';
+          } else if (ent.value === 'fondi europei'){
+            text = 'Reindirizzamento all\'ambito fondi europei';
+          }
+          
+          messageCounter += 1;
+          conversation.push({
+            id: messageCounter,
+            text,
+            owner: 'watson'
+          });
+
+        } else {
+          messageCounter += 1;
+          conversation.push({
+            id: messageCounter,
+            text: 'Non ho capito. Ripeti la domanda! Puoi scegliere tra i seguenti ambiti legali: Responsabilità Ammnistrativa o Fondi Europei',
+            owner: 'watson'
+          });
+        }
       }
-      this.setState({
-        conversation: conversation,
-        context: json.context,
-        error: null,
-        userInput: ''
-      });
-      scrollToMain();
+      
+      
 
       switch (text) {
       case 'Reindirizzamento all\'ambito responsabilità amministrativa':
@@ -219,6 +233,15 @@ class Main extends React.Component {
           window.location.replace('http://localhost:3000/index');
         });
       }*/
+
+      this.setState({
+        conversation: conversation,
+        context: json.context,
+        error: null,
+        userInput: ''
+      });
+
+      scrollToMain();
 
     }).catch(response => {
       console.log('ERROR in fetch: ' + JSON.stringify(response, null, 2));
