@@ -42,13 +42,13 @@ In questo prototipo, il webhook comunicherà con un `web action` di IBM Cloud Fu
 
 # Steps:
 
-1. [Clona il repo](#1-clone-the-repo)
-1. [Crea i servizi su IBM Cloud](#2-create-ibm-cloud-services)
-1. [Configura Watson Discovery](#3-configure-watson-discovery)
-1. [Crea l'action IBM Cloud Functions](#4-create-ibm-cloud-functions-action)
-1. [Configura Watson Assistant](#5-configure-watson-assistant)
-1. [Ottieni le credenziali IBM Cloud services e copiale nel file .env](#6-get-ibm-cloud-services-credentials-and-add-to-env-file)
-1. [Avvia l'applicazione](#7-run-the-application)
+1. [Clona il repo](#1-clona-il-repo)
+1. [Crea i servizi su IBM Cloud](#2-crea-i-servizi-su-ibm-cloud)
+1. [Configura Watson Discovery](#3-configura-watson-discovery)
+1. [Crea action IBM Cloud Functions](#4-crea-action-ibm-cloud-functions)
+1. [Configura Watson Assistant](#5-configura-watson-assistant)
+1. [Ottieni le credenziali dei servizi IBM Cloud e aggiungi al file env](#6-ottieni-le-credenziali-dei-servizi-ibm-cloud-e-aggiungi-al-file-env)
+1. [Avvio dell'applicazione](#7-avvio-dell'applicazione)
 
 ### 1. Clona il repo
 
@@ -291,7 +291,7 @@ Puoi anche verificare che la chiamata sia stata completata con successo facendo 
 
 ![try-it-vars-after](doc/source/images/try-it-vars-after.png)
 
-### 6. Ottieni le credenziali dei servizi IBM Cloud e aggiungi al file .env
+### 6. Ottieni le credenziali dei servizi IBM Cloud e aggiungi al file env
 
 Copia il file locale `env.sample` e rinominalo `.env`:
 

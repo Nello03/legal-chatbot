@@ -24,25 +24,6 @@ require('isomorphic-fetch');
 const messageBuilder = require('./message-builder');
 const assistant = require('./watson-assistant-service');
 
-/**
- * Back end server which handles initializing the Watson Assistant
- * service, and setting up route methods to handle client requests.
-
-const WatsonAssistantService = new Promise((resolve) => {
-  assistant.createSession({ assistantId: assistant.assistantId })
-    .then(res => {
-      console.log('Create Session result: ' + JSON.stringify(res.result, null, 2));
-      messageBuilder.setAssistantId(assistant.assistantId);
-      messageBuilder.setSessionId(res.result.session_id);
-      resolve(createServer());
-    })
-    .catch(error => {
-      // eslint-disable-next-line no-console
-      console.log('Error creating session:');
-      console.error(error);
-    });
-}); */
-
 const server = new Promise((resolve) => {
   resolve(createServer());
 });
