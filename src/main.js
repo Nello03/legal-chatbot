@@ -194,7 +194,7 @@ class Main extends React.Component {
           messageCounter += 1;
           conversation.push({
             id: messageCounter,
-            text: 'Non ho capito. Ripeti la domanda! Puoi scegliere tra i seguenti ambiti legali: Responsabilità Ammnistrativa o Fondi Europei',
+            text: 'Non ho capito. Ripeti la domanda!',
             owner: 'watson'
           });
         }
