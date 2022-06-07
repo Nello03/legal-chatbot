@@ -53,7 +53,7 @@ In questo prototipo, il webhook comunicherà con un `web action` di IBM Cloud Fu
 ### 1. Clona il repo
 
 ```bash
-git clone https://github.com/Nello03/legal-chatbot.git
+git clone https://github.com/aniello-dandrea/legal-chatbot.git
 ```
 
 ### 2. Crea i servizi IBM Cloud
